@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Свод"><meta name="theme-color" content="#0E1012"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-180.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Свод"><meta name="theme-color" content="#0E1012"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-180.png"><style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style></head><body>
 <title>Свод</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@700&display=swap">
 <style>
@@ -10,11 +10,13 @@
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;touch-action:manipulation}
 select.pill{font-size:16px}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);font-size:15px;line-height:1.35;padding-inline:16px}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);font-size:15px;line-height:1.35}
+#scroll{position:fixed;top:0;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:env(safe-area-inset-top,0px) 16px 0}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--at);outline-offset:2px}
-#app{max-width:520px;margin:0 auto;padding-block:20px 120px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;gap:14px}
+#app{max-width:520px;margin:0 auto;padding-block:20px calc(120px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
 h1{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.3px;margin:0;line-height:1.2}
 h2{font-size:16px;font-weight:700;margin:0}
 .mu{color:var(--mu)}.sm{font-size:13px}.at{color:var(--at)}
@@ -97,7 +99,7 @@ h2{font-size:16px;font-weight:700;margin:0}
 @media (prefers-reduced-motion: reduce){#splash{display:none}}
 </style>
 <div id="splash" aria-hidden="true"><div class="st"><div class="ar"></div><div class="dt"><div class="hf"></div><div class="hl"></div></div></div></div>
-<div id="app"></div>
+<div id="scroll"><div id="app"></div></div>
 <nav id="nav" aria-label="Разделы"><div id="navin"></div></nav>
 <div id="sheet" hidden></div>
 <script>
@@ -188,8 +190,8 @@ function sheetHtml(){if(ui.sheet==='capture'){var c=ui.cap;return'<div class="bo
   return'<div class="box" role="dialog" aria-label="Задача"><h2>'+(t.id?'Задача':'Новая задача')+'</h2><label class="fld">Название<input id="e-title" value="'+esc(t.title||'')+'"></label><div class="g2"><label class="fld">Куда<select id="e-kind">'+Object.keys(KIND).map(function(k){return o(k,KIND[k],t.kind)}).join('')+'</select></label><label class="fld">Статус<select id="e-status">'+Object.keys(ST).map(function(s){return o(s,ST[s],t.status||'plan')}).join('')+'</select></label></div><div class="g2"><label class="fld">Сфера (для личного)<select id="e-sphere">'+S.spheres.filter(function(s){return s.id!=='work'&&s.id!=='goals'}).map(function(s){return o(s.id,s.name,t.sphere||'home')}).join('')+'</select></label><label class="fld">Цель (для шага)<select id="e-goal">'+o('','—',t.goalId||'')+S.goals.map(function(g){return o(g.id,g.title,t.goalId)}).join('')+'</select></label></div><div class="g2"><label class="fld">Когда займусь<input id="e-date" type="date" value="'+(t.date||'')+'"></label><label class="fld">Время<input id="e-time" type="time" value="'+(t.time||'')+'"></label></div><div class="g2"><label class="fld">Срок<input id="e-due" type="date" value="'+(t.due||'')+'"></label><label class="fld">Минут<input id="e-dur" type="number" min="0" inputmode="numeric" value="'+(t.dur||'')+'"></label></div><div class="line"><button class="btn pri" style="flex:1" data-act="saveTask">Сохранить</button><button class="btn" data-act="close">Закрыть</button></div>'+(t.id?'<button class="btn warn" data-act="delTask">'+(ui.confirm==='t'?'Точно удалить?':'Удалить задачу')+'</button>':'')+'</div>'}
  return''}
 var V={today:vToday,inbox:vInbox,plan:vPlan,cal:vCal,goals:vGoals,settings:vSet};
-function render(){var y=window.scrollY||0,app=document.getElementById('app');app.style.minHeight=app.offsetHeight+'px';app.innerHTML=V[ui.tab]();app.style.minHeight='';
- if(ui.toTop){ui.toTop=false;window.scrollTo(0,0)}else if(window.scrollY!==y)window.scrollTo(0,y);document.getElementById('navin').innerHTML=navHtml();var sh=document.getElementById('sheet');sh.hidden=!ui.sheet;sh.innerHTML=sheetHtml();
+function render(){var sc=document.getElementById('scroll'),y=sc.scrollTop,app=document.getElementById('app');app.style.minHeight=app.offsetHeight+'px';app.innerHTML=V[ui.tab]();app.style.minHeight='';
+ if(ui.toTop){ui.toTop=false;sc.scrollTop=0}else if(sc.scrollTop!==y)sc.scrollTop=y;document.getElementById('navin').innerHTML=navHtml();var sh=document.getElementById('sheet');sh.hidden=!ui.sheet;sh.innerHTML=sheetHtml();
  if(ui.sheet==='capture'){var i=document.getElementById('cap-t');if(i){i.value=ui.cap.text||'';i.focus()}}}
 function val(id){var e=document.getElementById(id);return e?e.value.trim():''}
 function task(id){return S.tasks.filter(function(t){return t.id===id})[0]}
