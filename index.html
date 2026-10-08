@@ -7,8 +7,10 @@
 --display:'Unbounded','Arial Black',system-ui,sans-serif;--body:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0E1012;--card:#181B1E;--line:#262A2E;--line2:#363B41;--tx:#F4F6F1;--mu:#98A099;--ac:#C8F04B;--at:#C8F04B;--nav:#1D2024;--navtx:#98A099;--seg:#2B3035;--danger:#F2847C;--scrim:rgba(0,0,0,.6);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0E1012;--card:#181B1E;--line:#262A2E;--line2:#363B41;--tx:#F4F6F1;--mu:#98A099;--ac:#C8F04B;--at:#C8F04B;--nav:#1D2024;--navtx:#98A099;--seg:#2B3035;--danger:#F2847C;--scrim:rgba(0,0,0,.6);color-scheme:dark}
-*{box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+select.pill{font-size:16px}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);font-size:15px;line-height:1.35;padding-inline:16px}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -20,7 +22,7 @@ h2{font-size:16px;font-weight:700;margin:0}
 .head{display:flex;align-items:center;gap:12px}
 .head .grow{flex:1;min-width:0}
 .mark{position:relative;flex:none;width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center}
-.mark:before{content:"";width:20px;height:19px;border:5px solid var(--tx);border-bottom:0;border-radius:10px 10px 0 0}
+.mark:before{content:"";position:absolute;left:7.5px;top:7.2px;width:19px;height:17.5px;border:4.25px solid var(--tx);border-bottom:0;border-radius:9.5px 9.5px 0 0}
 .mark:after{content:"";position:absolute;left:14.5px;top:18px;width:5px;height:5px;border-radius:50%;background:var(--ac)}
 .ib{flex:none;width:44px;height:44px;border-radius:22px;border:1px solid var(--line2);background:none;display:flex;align-items:center;justify-content:center;position:relative}
 .ib svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -65,7 +67,7 @@ h2{font-size:16px;font-weight:700;margin:0}
 .ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
 .fld{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--mu)}
 .fld input,.fld select,.fld textarea,.inp{height:48px;border-radius:14px;border:1px solid var(--line2);background:var(--bg);color:var(--tx);padding:0 14px;font-size:16px;width:100%;min-width:0}
-.fld textarea{height:110px;padding:12px 14px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+.fld textarea{height:110px;padding:12px 14px;font-size:16px;font-family:ui-monospace,Menlo,monospace}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .line{display:flex;gap:8px;align-items:center}.line .inp{flex:1}
 .set{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:0 16px}
@@ -84,12 +86,12 @@ h2{font-size:16px;font-weight:700;margin:0}
 .chip.on{background:var(--ac);border-color:var(--ac);color:var(--on)}
 #splash{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;align-items:center;justify-content:center;animation:sp-out .35s 1.7s ease-in forwards}
 #splash .st{position:relative;width:160px;height:160px}
-#splash .ar{position:absolute;left:36px;top:30px;width:88px;height:83px;border:20px solid var(--tx);border-bottom:0;border-radius:44px 44px 0 0;animation:sp-ar 1.7s cubic-bezier(.6,0,.2,1) forwards}
-#splash .dt{position:absolute;left:69px;top:78px;width:22px;height:22px;border-radius:50%;background:var(--ac);animation:sp-dt 1.7s cubic-bezier(.6,0,.2,1) forwards}
+#splash .ar{position:absolute;left:-25.6px;top:-28.1px;width:211.2px;height:199.2px;border:48px solid var(--tx);border-bottom:0;border-radius:105.6px 105.6px 0 0;transform:scale(.4167);opacity:0;animation:sp-ar 1.7s cubic-bezier(.6,0,.2,1) forwards}
+#splash .dt{position:absolute;left:32px;top:41px;width:96px;height:96px;border-radius:50%;background:var(--ac);transform:scale(.229);opacity:0;animation:sp-dt 1.7s cubic-bezier(.6,0,.2,1) forwards}
 #splash .hf{position:absolute;inset:0;border-radius:50%;background:conic-gradient(transparent 0 180deg,var(--tx) 180deg 360deg);opacity:0;animation:sp-hf 1.7s forwards}
 #splash .hl{position:absolute;inset:22%;border-radius:50%;background:var(--bg);transform:scale(0);animation:sp-hl 1.7s forwards}
-@keyframes sp-ar{0%{opacity:0}15%,35%{opacity:1;transform:none}65%,100%{opacity:0;transform:scale(2.4)}}
-@keyframes sp-dt{0%{opacity:0}15%,35%{opacity:1;transform:none}70%,100%{opacity:1;transform:translateY(-9px) scale(4.4)}}
+@keyframes sp-ar{0%{opacity:0;transform:scale(.4167)}15%,35%{opacity:1;transform:scale(.4167)}65%,100%{opacity:0;transform:scale(1)}}
+@keyframes sp-dt{0%{opacity:0;transform:scale(.229)}15%,35%{opacity:1;transform:scale(.229)}70%,100%{opacity:1;transform:translateY(-9px) scale(1)}}
 @keyframes sp-hf{0%,70%{opacity:0}90%,100%{opacity:1}}
 @keyframes sp-hl{0%,62%{transform:scale(0)}85%,100%{transform:scale(1)}}
 @keyframes sp-out{to{opacity:0;visibility:hidden}}
@@ -171,7 +173,7 @@ function vCal(){var y=+ui.month.slice(0,4),m=+ui.month.slice(5)-1,first=new Date
  for(var n=1;n<=days;n++){var d=y+'-'+pad(m+1)+'-'+pad(n),seen={},dots='';S.tasks.forEach(function(t){if(t.kind!=='inbox'&&(t.date===d||t.due===d)){var col=color(t);if(!seen[col]&&Object.keys(seen).length<3){seen[col]=1;dots+='<i style="background:'+col+'"></i>'}}});
   c+='<button class="'+(d===ui.day?'sel ':'')+(d===TODAY?'today':'')+'" data-act="calday" data-d="'+d+'" aria-label="'+n+' '+MON[m]+'"><b>'+n+'</b><span class="dots">'+dots+'</span></button>'}
  var lg=S.spheres.map(function(s){return'<span style="display:inline-flex;align-items:center;gap:6px"><i class="dot" style="background:'+s.color+'"></i>'+esc(s.name)+'</span>'}).join('');
- return'<div class="head"><span class="mark" aria-hidden="true"></span><div class="grow"><h1>'+MONN[m]+'</h1><div class="mu">'+y+'</div></div><button class="ib" data-act="mon" data-n="-1" aria-label="Предыдущий месяц">'+ico('l')+'</button><button class="ib" data-act="mon" data-n="1" aria-label="Следующий месяц">'+ico('r')+'</button></div><div class="cal">'+c+'</div><div class="sm mu" style="display:flex;flex-wrap:wrap;gap:6px 14px">'+lg+'</div><section><div class="sec"><h2>'+human(ui.day)+'</h2><button class="tt at sm" style="flex:none" data-act="new" data-k="personal" data-d="'+ui.day+'">+ Дело</button></div>'+list(onDay(ui.day),'На этот день ничего нет.')+'</section>'}
+ return'<div class="head"><span class="mark" aria-hidden="true"></span><div class="grow"><h1>'+MONN[m]+'</h1><div class="mu">'+y+'</div></div><button class="ib" data-act="mon" data-n="-1" aria-label="Предыдущий месяц">'+ico('l')+'</button><button class="ib" data-act="mon" data-n="1" aria-label="Следующий месяц">'+ico('r')+'</button></div><div class="cal">'+c+'</div><div class="sm mu" style="display:flex;flex-wrap:wrap;gap:6px 14px">'+lg+'</div><section style="min-height:340px"><div class="sec"><h2>'+human(ui.day)+'</h2><button class="tt at sm" style="flex:none" data-act="new" data-k="personal" data-d="'+ui.day+'">+ Дело</button></div>'+list(onDay(ui.day),'На этот день ничего нет.')+'</section>'}
 function vGoals(){var out=S.goals.map(function(g){var p=gProg(g),open=ui.openGoal===g.id,steps=S.tasks.filter(function(t){return t.goalId===g.id});
   return'<div class="card pad" style="display:flex;flex-direction:column;gap:12px"><button class="tt goal" data-act="og" data-id="'+g.id+'">'+ring(p)+'<span style="flex:1;min-width:0"><b>'+esc(g.title)+'</b><span class="sm mu">'+p.a+' из '+p.b+(g.type==='habit'?' занятий':' шагов')+(g.due?' · до '+short(g.due):'')+'</span></span></button>'+
   (g.type==='habit'?'<div class="line"><button class="btn pri" style="flex:1" data-act="hab" data-n="1" data-id="'+g.id+'">+1 занятие</button><button class="btn" data-act="hab" data-n="-1" data-id="'+g.id+'" aria-label="Убрать одно занятие">−1</button></div>':'')+
@@ -187,13 +189,14 @@ function sheetHtml(){if(ui.sheet==='capture'){var c=ui.cap;return'<div class="bo
   return'<div class="box" role="dialog" aria-label="Задача"><h2>'+(t.id?'Задача':'Новая задача')+'</h2><label class="fld">Название<input id="e-title" value="'+esc(t.title||'')+'"></label><div class="g2"><label class="fld">Куда<select id="e-kind">'+Object.keys(KIND).map(function(k){return o(k,KIND[k],t.kind)}).join('')+'</select></label><label class="fld">Статус<select id="e-status">'+Object.keys(ST).map(function(s){return o(s,ST[s],t.status||'plan')}).join('')+'</select></label></div><div class="g2"><label class="fld">Сфера (для личного)<select id="e-sphere">'+S.spheres.filter(function(s){return s.id!=='work'&&s.id!=='goals'}).map(function(s){return o(s.id,s.name,t.sphere||'home')}).join('')+'</select></label><label class="fld">Цель (для шага)<select id="e-goal">'+o('','—',t.goalId||'')+S.goals.map(function(g){return o(g.id,g.title,t.goalId)}).join('')+'</select></label></div><div class="g2"><label class="fld">Когда займусь<input id="e-date" type="date" value="'+(t.date||'')+'"></label><label class="fld">Время<input id="e-time" type="time" value="'+(t.time||'')+'"></label></div><div class="g2"><label class="fld">Срок<input id="e-due" type="date" value="'+(t.due||'')+'"></label><label class="fld">Минут<input id="e-dur" type="number" min="0" inputmode="numeric" value="'+(t.dur||'')+'"></label></div><div class="line"><button class="btn pri" style="flex:1" data-act="saveTask">Сохранить</button><button class="btn" data-act="close">Закрыть</button></div>'+(t.id?'<button class="btn warn" data-act="delTask">'+(ui.confirm==='t'?'Точно удалить?':'Удалить задачу')+'</button>':'')+'</div>'}
  return''}
 var V={today:vToday,inbox:vInbox,plan:vPlan,cal:vCal,goals:vGoals,settings:vSet};
-function render(){document.getElementById('app').innerHTML=V[ui.tab]();document.getElementById('navin').innerHTML=navHtml();var sh=document.getElementById('sheet');sh.hidden=!ui.sheet;sh.innerHTML=sheetHtml();
+function render(){var y=window.scrollY||0,app=document.getElementById('app');app.style.minHeight=app.offsetHeight+'px';app.innerHTML=V[ui.tab]();app.style.minHeight='';
+ if(ui.toTop){ui.toTop=false;window.scrollTo(0,0)}else if(window.scrollY!==y)window.scrollTo(0,y);document.getElementById('navin').innerHTML=navHtml();var sh=document.getElementById('sheet');sh.hidden=!ui.sheet;sh.innerHTML=sheetHtml();
  if(ui.sheet==='capture'){var i=document.getElementById('cap-t');if(i){i.value=ui.cap.text||'';i.focus()}}}
 function val(id){var e=document.getElementById(id);return e?e.value.trim():''}
 function task(id){return S.tasks.filter(function(t){return t.id===id})[0]}
 function touch(){S.demo=S.demo&&false;save()}
 var A={
- tab:function(d){ui.tab=d.tab;ui.confirm=null},
+ tab:function(d){if(ui.tab!==d.tab)ui.toTop=true;ui.tab=d.tab;ui.confirm=null},
  day:function(d){ui.day=d.d},calday:function(d){ui.day=d.d},
  mon:function(d){var y=+ui.month.slice(0,4),m=+ui.month.slice(5)-1+(+d.n),x=new Date(y,m,1);ui.month=x.getFullYear()+'-'+pad(x.getMonth()+1)},
  view:function(d){S.settings.view=d.v;save()},pk:function(d){ui.planKind=d.k},
